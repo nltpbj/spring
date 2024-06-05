@@ -1,0 +1,15 @@
+package com.example.DAO;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+@SpringBootTest
+public class MysqlTest {
+	@Autowired
+	MYsqlDAO dao;
+	
+	@Test
+	public void now() {
+		System.out.println("현재날짜시간" + dao.now());
+	}
+}

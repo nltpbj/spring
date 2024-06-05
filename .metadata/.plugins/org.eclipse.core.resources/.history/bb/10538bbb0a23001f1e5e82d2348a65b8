@@ -1,0 +1,5 @@
+package com.example.dao;
+
+public interface UserDAO {
+	public List<HashMap<String,Object>> list
+}

@@ -1,0 +1,13 @@
+package com.example.dao;
+
+import java.util.HashMap;
+import java.util.List;
+
+public class UserDAOImpl implements UserDAO{
+	@Autowired
+	@Override
+	public List<HashMap<String, Object>> list() {
+		return null;
+	}
+	
+}
