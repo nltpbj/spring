@@ -8,7 +8,14 @@ public class BBSVO extends UserVO{
 	private String contents;
 	private Date regDate;
 	private String uid;
+	private int viewcnt;
 	
+	public int getViewcnt() {
+		return viewcnt;
+	}
+	public void setViewcnt(int viewcnt) {
+		this.viewcnt = viewcnt;
+	}
 	public String getUid() {
 		return uid;
 	}
