@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.dao.BBSDAO;
+import com.example.dao.ReplyDAO;
 import com.example.dao.UserDAO;
 import com.example.domain.QueryVO;
+import com.example.domain.ReplyVO;
 
 @SpringBootTest
 public class MysqlTest {
@@ -16,8 +18,11 @@ public class MysqlTest {
 	@Autowired
 	BBSDAO bdao;
 	
+	@Autowired
+	ReplyDAO rdao;
+	
 	@Test
 	public void test() {
-		bdao.updateViewcnt(119);
+		rdao.total(119);
 	}
 }
