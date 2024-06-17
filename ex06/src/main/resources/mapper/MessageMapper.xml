@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.MessageMapper">
+	<select id="listReceive" resultType="com.example.domain.MessageVO">
+		select m.* , u.uname
+		from messages m, users u
+		where receiver=#{receiver} and u.uid=m.sender
+		order by mid desc;
+	</select>
+	<select id="listSend" resultType="com.example.domain.MessageVO">
+		select m.* , u.uname
+		from messages m, users u
+		where sender=#{sender} and u.uid=m.receiver
+		order by mid desc;
+	</select>
+	<update id="updateReadDate">
+		update messages
+		set readDate=now()
+		where mid=#{mid}
+	</update>
+	<select id="readSend" resultType="com.example.domain.MessageVO">
+		select m.*, u.uname, u.photo
+		from messages m, users u
+		where m.receiver=u.uid and mid=#{mid};
+	</select>
+	<select id="readReceive" resultType="com.example.domain.MessageVO">
+		select m.*, u.uname, u.photo
+		from messages m, users u
+		where m.sender=u.uid and mid=#{mid};
+	</select>
+ 	<insert id="insert">
+ 		insert into messages(sender, receiver, message)
+ 		values(#{sender}, #{receiver}, #{message})
+ 	</insert>
+</mapper>
