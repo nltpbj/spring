@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.dao.AccountDAO;
 import com.example.dao.BBSDAO;
 import com.example.dao.MessageDAO;
 import com.example.dao.ReplyDAO;
@@ -26,8 +27,11 @@ public class MysqlTest {
 	@Autowired
 	MessageDAO mdao;
 	
+	@Autowired
+	AccountDAO adao;
+	
 	@Test
 	public void test() {
-		mdao.listReceive("red");
+		adao.read("red");
 	}
 }
