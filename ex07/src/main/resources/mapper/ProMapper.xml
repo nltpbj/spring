@@ -4,6 +4,7 @@
  	<select id="list" resultType="com.example.domain.ProVO">
  		select *
 		from professors
+		where  dept like #{word}
 		order by pcode desc
 		limit #{start}, #{size};
  	</select>

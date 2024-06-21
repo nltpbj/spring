@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.StuMapper">
+	<update id="updatePhoto">
+		update students
+		set photo=#{photo}
+		where scode=#{scode}
+	</update>
 	<update id="update">
 		update students
 		set sname=#{sname}, year=#{year}, birthday=#{birthday}, advisor=#{advisor}
@@ -37,7 +42,7 @@
  	<if test="key=='pname'">
  		where pname like #{word}
  	</if>
-		order by scode desc
+		order by scode 
 		limit #{start}, #{size};
  	</select>
  	<select id="total" resultType="int">

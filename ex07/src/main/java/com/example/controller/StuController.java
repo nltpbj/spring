@@ -50,4 +50,9 @@ public class StuController {
 	public void update(@RequestBody StuVO vo) {
 		dao.update(vo);
 	}
+	
+	@PostMapping("/updatePhoto")
+	public void updatePhoto(@RequestBody StuVO vo) {
+		dao.updatePhoto(vo);
+	}
 }

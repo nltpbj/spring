@@ -18,7 +18,7 @@ public class ProController {
 	@Autowired
 	ProDAO dao;
 	
-	@GetMapping("") //테스트 /pro?page=1&size=5
+	@GetMapping("") //테스트 /pro?page=1&size=5&word=
 	public HashMap<String,Object> list(QueryVO vo){
 		HashMap<String,Object> map=new HashMap<String,Object>();
 		map.put("total", dao.total());

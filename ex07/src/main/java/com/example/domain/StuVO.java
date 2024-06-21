@@ -9,10 +9,17 @@ public class StuVO extends ProVO{
 	private String sname;
 	private String dept;
 	private int year;
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
+	@JsonFormat(pattern="yyyy-MM-dd", timezone="Asia/Seoul")
 	private Date birthday;
 	private String advisor;
+	private String Photo;
 	
+	public String getPhoto() {
+		return Photo;
+	}
+	public void setPhoto(String photo) {
+		Photo = photo;
+	}
 	public String getScode() {
 		return scode;
 	}
@@ -52,8 +59,9 @@ public class StuVO extends ProVO{
 	@Override
 	public String toString() {
 		return "StuVO [scode=" + scode + ", sname=" + sname + ", dept=" + dept + ", year=" + year + ", birthday="
-				+ birthday + ", advisor=" + advisor + ", getPname()=" + getPname() + "]";
+				+ birthday + ", advisor=" + advisor + ", Photo=" + Photo + "]";
 	}
+
 
 	
 }
