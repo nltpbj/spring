@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.io.File;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.example.dao.GoodsDAO;
 import com.example.domain.GoodsVO;
@@ -26,6 +29,45 @@ public class GoodsController {
 	
 	@Autowired
 	GoodsDAO dao;
+	
+	@PostMapping("/update/contents")
+	public void updateContents(@RequestBody GoodsVO vo) {
+		dao.updateContents(vo);
+	}
+	//이미지업로드
+	@PostMapping("/update/image/{gid}")
+	public void updateImage(@PathVariable("gid") String gid, 
+			MultipartHttpServletRequest multi)throws Exception {
+		
+		//파일업로드
+		MultipartFile file=multi.getFile("byte");
+		String filePath="/upload/mall/";
+		String fileName=gid + ".jpg";
+		
+		
+		//파일이 존재하면 삭제
+		File oldFile=new File(filePath + fileName);
+		if(oldFile.exists()) {
+			oldFile.delete();
+		}else {
+			//이미지이름변경
+			GoodsVO vo=new GoodsVO();
+			vo.setGid(gid);
+			vo.setImage("/display?file=" + filePath + fileName);
+			dao.updateImage(vo);
+		}
+		file.transferTo(new File("c:" + filePath + fileName));
+	}
+	
+	
+	@GetMapping("/read/{gid}")
+	public GoodsVO read(@PathVariable("gid") String gid) {
+		return dao.read(gid);
+	}
+	@PostMapping("/update")
+	public void update(@RequestBody GoodsVO vo) {
+		dao.update(vo);
+	}
 	
 	@PostMapping("/delete/{gid}")
 	public void delete(@PathVariable("gid") String gid) {

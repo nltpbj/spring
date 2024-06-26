@@ -13,6 +13,14 @@ public class GoodsVO {
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
 	private Date regDate;
 	private String image;
+	private String contents;
+	
+	public String getContents() {
+		return contents;
+	}
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
 	public String getGid() {
 		return gid;
 	}
