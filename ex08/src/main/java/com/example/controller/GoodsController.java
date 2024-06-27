@@ -2,6 +2,8 @@ package com.example.controller;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.example.dao.GoodsDAO;
+import com.example.domain.AttachVO;
 import com.example.domain.GoodsVO;
 import com.example.domain.NaverAPI;
 import com.example.domain.QueryVO;
@@ -29,6 +32,29 @@ public class GoodsController {
 	
 	@Autowired
 	GoodsDAO dao;
+	
+	//첨부파일삭제
+	@PostMapping("/attach/delete") // /display?file=
+	public void deleteAttach(@RequestBody AttachVO vo) {
+		try {
+			String displayName=vo.getFilename();
+			int index = displayName.indexOf("=");
+			String fileName=displayName.substring(index + 1);
+			
+			
+			File file=new File("c:" + fileName);
+			if(file.exists()) file.delete();
+			dao.deleteAttach(vo.getAid());
+		}catch(Exception e) {
+			System.out.println("첨부파일삭제:" + e.toString());
+		}
+	}
+
+	
+	@GetMapping("/attach/{gid}") // /goods/attach/82693768242
+	public List<AttachVO> listAttach(@PathVariable("gid") String gid){
+		return dao.listAttach(gid);
+	}
 	
 	@PostMapping("/update/contents")
 	public void updateContents(@RequestBody GoodsVO vo) {
@@ -91,6 +117,30 @@ public class GoodsController {
 		result=NaverAPI.search(query, page, size);
 		return result;
 		
+	}
+	//Attach 파일을 업로드
+	@PostMapping("/attach/{gid}")
+	public void attach(@PathVariable("gid") String gid, MultipartHttpServletRequest multi) {
+		try {
+			String filePath="/upload/mall/" + gid + "/";
+			File folder = new File("C:" + filePath);
+			if(!folder.exists()) folder.mkdir();
+			
+			List<MultipartFile> files=multi.getFiles("bytes");
+			
+			for(MultipartFile file:files) {
+				String fileName = UUID.randomUUID().toString()+".jpg";
+				file.transferTo(new File("c:" + filePath + fileName));
+				
+				AttachVO vo=new AttachVO();
+				vo.setGid(gid);
+				vo.setFilename("/display?file=" + filePath + fileName);
+				dao.insertAttach(vo);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Attach 파일업로드:" +  e.toString());
+		}
 	}
 	
 }
