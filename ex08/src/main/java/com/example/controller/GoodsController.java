@@ -33,6 +33,32 @@ public class GoodsController {
 	@Autowired
 	GoodsDAO dao;
 	
+	//관련상품목록
+		@GetMapping("/related/list/{gid}")
+		public List<HashMap<String,Object>> listRealated(@PathVariable("gid") String gid){
+			return dao.listRelated(gid);
+		}
+		
+		//관련상품등록
+		@PostMapping("/related/insert")
+		public int insertRelated(@RequestBody HashMap<String,Object> map) {
+			String rid=map.get("rid").toString();
+			String gid=map.get("gid").toString();
+			System.out.println("................." + gid + "................" + rid);
+			return service.insertRelated(gid, rid);
+		}
+		
+		
+		//관련상품삭제
+		@PostMapping("/related/delete")
+		public void deleteRelated(@RequestBody HashMap<String,Object> map) {
+			String rid=map.get("rid").toString();
+			String gid=map.get("gid").toString();
+			System.out.println("................." + gid + "................" + rid);
+			dao.deleteRelated(gid, rid);
+		}
+	
+	
 	//첨부파일삭제
 	@PostMapping("/attach/delete") // /display?file=
 	public void deleteAttach(@RequestBody AttachVO vo) {
@@ -90,6 +116,7 @@ public class GoodsController {
 	public GoodsVO read(@PathVariable("gid") String gid) {
 		return dao.read(gid);
 	}
+	
 	@PostMapping("/update")
 	public void update(@RequestBody GoodsVO vo) {
 		dao.update(vo);
@@ -118,6 +145,7 @@ public class GoodsController {
 		return result;
 		
 	}
+	
 	//Attach 파일을 업로드
 	@PostMapping("/attach/{gid}")
 	public void attach(@PathVariable("gid") String gid, MultipartHttpServletRequest multi) {

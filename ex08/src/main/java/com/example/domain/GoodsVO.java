@@ -10,7 +10,7 @@ public class GoodsVO {
 	private String brand;
 	private String maker;
 	private int price;
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
+	@JsonFormat(pattern="yyyy-MM-dd", timezone="Asia/Seoul")
 	private Date regDate;
 	private String image;
 	private String contents;
